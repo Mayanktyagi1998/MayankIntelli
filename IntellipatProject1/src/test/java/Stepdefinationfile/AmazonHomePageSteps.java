@@ -13,6 +13,9 @@ import org.openqa.selenium.support.ui.Select;
 import pageobjects.AmazonHomePage;
 import pageobjects.SearchPage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class AmazonHomePageSteps extends Baseclass {
 
@@ -33,29 +36,25 @@ public class AmazonHomePageSteps extends Baseclass {
     public void validateTitleOfPage() {
         if (SearchPage.getTitleOfPage().equals("Amazon.in :iphone")) {
             System.out.println("Match");
+        } else {
+            System.out.println("Not Match");
         }
-        else
-            {
-                System.out.println("Not Match");
-            }
-        }
+    }
 
     @Given("user extracts the vlaue of from the category dropdown")
-    public void userExtractsTheVlaueOfFromTheCategoryDropdown()
-    {
+    public void userExtractsTheVlaueOfFromTheCategoryDropdown() {
 
-        for(int i= 0;i<AmazonHomePage.getCatrgoryDropdownCount();i++)
-        {
+        for (int i = 0; i < AmazonHomePage.getCatrgoryDropdownCount(); i++) {
             //this will print all the values which are present in category element
-           String value = AmazonHomePage.getDropdownvalues(i);
-           System.out.println(value);
+            String value = AmazonHomePage.getDropdownvalues(i);
+            System.out.println(value);
         }
     }
 
     @Given("user select value from the categorydropdown")
     public void userSelectValueFromTheCategorydropdown() {
 
-     AmazonHomePage.selectValueByIndex(2);
+        AmazonHomePage.selectValueByIndex(2);
 
     }
 
@@ -63,23 +62,55 @@ public class AmazonHomePageSteps extends Baseclass {
     public void userSelectTheBabywishlistByMouseAction() {
 
         Actions act = new Actions(driver);
-        WebElement signInElement =  driver.findElement(By.id("nav-link-accountList-nav-line-1"));
+        WebElement signInElement = driver.findElement(By.id("nav-link-accountList-nav-line-1"));
         act.clickAndHold(signInElement).build().perform();
-        driver.findElement(By.linkText("Watchlist")).sendKeys(Keys.chord(Keys.CONTROL,Keys.ENTER));
+        driver.findElement(By.linkText("Watchlist")).sendKeys(Keys.chord(Keys.CONTROL, Keys.ENTER));
         //when we use any method of action class we need to give build and perform
     }
 
     @Given("user drag and drop the box")
-    public void userDragAndDropTheBox()
-    {
+    public void userDragAndDropTheBox() {
         WebElement frameElement = driver.findElement(By.className("demo-frame"));
         driver.switchTo().frame(frameElement);
         Actions action = new Actions(driver);
         WebElement source = driver.findElement(By.id("draggable"));
         WebElement target = driver.findElement(By.id("droppable"));
-        action.dragAndDrop(source,target).build().perform();
+        action.dragAndDrop(source, target).build().perform();
 
         driver.switchTo().defaultContent();
+
+    }
+
+    @Given("user handels the table")
+    public void userHandelsTheTable() {
+        WebElement ey = driver.findElement(By.xpath("//table[@class='infobox vcard']"));
+        List<WebElement> columnElements = ey.findElements(By.tagName("th"));
+        List<String> columnValues = new ArrayList<String>();
+
+        for (WebElement k : columnElements) {
+            columnValues.add(k.getText());
+        }
+        System.out.println(columnValues);
+
+
+        List<String> rowValues = new ArrayList<String>();
+         for(int i = 1; i <ey.findElements(By.tagName("td")).size();i++)
+         {
+               rowValues.add(ey.findElements(By.tagName("td")).get(i).getText());
+         }
+         System.out.println(rowValues);
+
+         WebElement secondTable = driver.findElement(By.xpath("//table[@class='wikitable']"));
+         String secondvalue = secondTable.findElement(By.xpath("//table[@class='wikitable']//tr//th[4]")).getText();
+         System.out.println(secondvalue);
+
+         List<WebElement> a = secondTable.findElements(By.xpath("//table[@class='wikitable']//tr[4]//td"));
+
+         for(WebElement b :a)
+         {
+             System.out.println(b.getText());
+         }
+
 
     }
 }
