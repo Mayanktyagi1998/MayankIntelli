@@ -13,17 +13,18 @@ public class SalesforceLoginPage extends Baseclass {
         //parent to child ex - //div[@id='username_container']/child::input[1]
      driver.findElement(By.xpath("//div[@id='username_container']/child::input[1]")).sendKeys(username);
     }
-    public static void enterPassword(String password)
-    {
+    public static void enterPassword(String password) {
      driver.findElement(By.name("pw")).sendKeys(password);
-    }
-    public static void clickOnLoginButton() {
-     driver.findElement(By.id("Login")).click();
 
     }
+    public static void clickOnLoginButton() throws InterruptedException {
+     driver.findElement(By.id("Login")).click();
+     Thread.sleep(3000);
+    }
+
      public static String geterrorMessage()
      {
-         return driver.findElement(By.id("error")).getText();
+         return driver.findElement(By.xpath("//div[@id='error']")).getText();
      }
 
 }

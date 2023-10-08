@@ -9,5 +9,6 @@ public class BookSpiceJetSteps {
         BookSpiceJet.clickfromdropdown();
         BookSpiceJet.selectValueFromDropDown(2, 4);
         BookSpiceJet.selectValueFromDropDown2(1, 1);
+
     }
 }

@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 
+import org.junit.Assert;
 import pageobjects.SalesforceLoginPage;
 
 import java.io.IOException;
@@ -21,12 +22,16 @@ public class SalesforceLoginSteps {
         SalesforceLoginPage.enterPassword(ReadExcel.getDataFromExcel("LoginDetails", 1, 0));
     }
     @And("user clicks on login button")
-    public void userClicksOnLoginButton(){
+    public void userClicksOnLoginButton()throws InterruptedException{
         SalesforceLoginPage.clickOnLoginButton();
     }
 
+
+
     @Then("user validated the error message")
     public void userValidatedTheErrorMessage() {
+        Assert.assertEquals("Please check your username and password. If you still can't log in, contact your Salesforce administrator.",SalesforceLoginPage.geterrorMessage());
+
         if (SalesforceLoginPage.geterrorMessage().equals("Please check your username and password. If you still can't log in, contact your Salesforce administrator."))
         {
             System.out.println("Both are equal");

@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
         //features is used to provide the path of feature file
         features = {"src/test/resources/featurefile"},
         glue = {"Stepdefinationfile"},
-        tags = "@EYColumn",
+        tags = "@MouseAction",
         plugin = "pretty"
 
 )

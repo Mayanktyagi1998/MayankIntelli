@@ -13,6 +13,7 @@ import pageobjects.SearchPage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 public class AmazonHomePageSteps extends Baseclass {
@@ -62,8 +63,19 @@ public class AmazonHomePageSteps extends Baseclass {
         Actions act = new Actions(driver);
         WebElement signInElement = driver.findElement(By.id("nav-link-accountList-nav-line-1"));
         act.clickAndHold(signInElement).build().perform();
-        driver.findElement(By.linkText("Watchlist")).sendKeys(Keys.chord(Keys.CONTROL, Keys.ENTER));
+        driver.findElement(By.linkText("Baby Wishlist")).sendKeys(Keys.chord(Keys.CONTROL, Keys.ENTER));
         //when we use any method of action class we need to give build and perform
+
+        //this will get all the properties of child window as well as parent window
+        //we storing in set becasuse it will not allow us to store the duplicate values.
+        Set<String> winpro =  driver.getWindowHandles();
+        //we are itreating the values store in winpro by the help of for each loop
+        for(String win: winpro)
+        {
+           driver.switchTo().window(win);
+           System.out.println(driver.getTitle());
+       }
+        driver.switchTo().defaultContent();
     }
 
     @Given("user drag and drop the box")
@@ -110,11 +122,11 @@ public class AmazonHomePageSteps extends Baseclass {
         return secondvalue;
     }
 
-        public static String columnCount(int coumnlIndex)
+        public static String getValuefromTable(int coumnlIndex)
         {
             return driver.findElement(By.xpath("//table[@class='wikitable']//tr//td["+coumnlIndex+"]")).getText();
         }
-        public static String rowCount(int rowIndex1,int coumnlIndex1)
+        public static String getvaluefromTable(int rowIndex1,int coumnlIndex1)
         {
             return driver.findElement(By.xpath("//table[@class='wikitable']//tr["+rowIndex1+"]//td["+coumnlIndex1+"]")).getText();
         }
